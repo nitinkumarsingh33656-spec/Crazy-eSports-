@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Crazy eSports - Admin Panel</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#08090d;
+  --card:#111319;
+  --card2:#171a21;
+  --border:#282d38;
+  --primary:#695cff;
+  --primary2:#8b5cf6;
+  --green:#35d47c;
+  --red:#ff5967;
+  --orange:#ffae42;
+  --text:#ffffff;
+  --muted:#858c9b;
+}
+
+body{
+  font-family:Inter,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:80px;
+}
+
+button,
+input,
+textarea,
+select{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+  border:0;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+#loginScreen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at top,#211b45,#08090d 55%);
+}
+
+.loginBox{
+  width:100%;
+  max-width:420px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:25px;
+  padding:30px;
+  box-shadow:0 25px 80px #000b;
+}
+
+.logo{
+  width:75px;
+  height:75px;
+  border-radius:22px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:auto auto 16px;
+  font-size:32px;
+  box-shadow:0 15px 40px #695cff55;
+}
+
+.loginBox h1{
+  text-align:center;
+  font-size:26px;
+}
+
+.loginSub{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  margin:7px 0 25px;
+}
+
+.input{
+  width:100%;
+  padding:13px 14px;
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  color:#fff;
+  outline:none;
+  margin-bottom:12px;
+}
+
+.input:focus{
+  border-color:var(--primary);
+}
+
+textarea.input{
+  min-height:100px;
+  resize:vertical;
+}
+
+select.input{
+  appearance:auto;
+}
+
+.btn{
+  width:100%;
+  padding:13px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:#fff;
+  font-weight:700;
+}
+
+.btn.secondary{
+  background:#20242c;
+}
+
+.btn.green{
+  background:var(--green);
+  color:#07130c;
+}
+
+.btn.red{
+  background:var(--red);
+}
+
+.btn.orange{
+  background:var(--orange);
+  color:#171007;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+#adminApp{
+  max-width:900px;
+  margin:auto;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:30;
+  background:#08090ded;
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid #222631;
+  padding:14px 15px;
+}
+
+.headerInner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.brandIcon{
+  width:44px;
+  height:44px;
+  border-radius:13px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.brandText b{
+  display:block;
+  font-size:16px;
+}
+
+.brandText small{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.adminBadge{
+  background:#1b3024;
+  color:#6ff09d;
+  border:1px solid #28533a;
+  padding:7px 10px;
+  border-radius:10px;
+  font-size:10px;
+  font-weight:700;
+}
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main{
+  padding:18px 14px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.pageTitle{
+  font-size:21px;
+  font-weight:800;
+  margin-bottom:15px;
+}
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:15px;
+}
+
+.statIcon{
+  width:35px;
+  height:35px;
+  border-radius:10px;
+  background:#1d2029;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:10px;
+  color:#9b90ff;
+}
+
+.stat small{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.stat strong{
+  display:block;
+  font-size:21px;
+  margin-top:4px;
+}
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:15px;
+  margin-bottom:13px;
+}
+
+.cardTitle{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.cardTitle h3{
+  font-size:15px;
+}
+
+.muted{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.divider{
+  height:1px;
+  background:#252a34;
+  margin:12px 0;
+}
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.smallBtn{
+  padding:8px 10px;
+  border-radius:9px;
+  background:#20242d;
+  color:#fff;
+  font-size:10px;
+  font-weight:700;
+}
+
+.smallBtn.primary{
+  background:var(--primary);
+}
+
+.smallBtn.green{
+  background:#173b28;
+  color:#6ff09d;
+}
+
+.smallBtn.red{
+  background:#3c1920;
+  color:#ff7782;
+}
+
+.smallBtn.orange{
+  background:#3c2c18;
+  color:#ffbd62;
+}
+
+/* =====================================================
+   TOURNAMENT CARD
+===================================================== */
+
+.tournamentCard{
+  overflow:hidden;
+}
+
+.tImage{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+  border-radius:13px;
+  background:#181b22;
+  margin-bottom:12px;
+}
+
+.tName{
+  font-size:17px;
+  font-weight:800;
+}
+
+.tMeta{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:12px;
+}
+
+.meta{
+  background:var(--card2);
+  border-radius:10px;
+  padding:9px;
+}
+
+.meta span{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+}
+
+.meta b{
+  display:block;
+  margin-top:3px;
+  font-size:12px;
+}
+
+.cardActions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:12px;
+}
+
+/* =====================================================
+   REQUESTS
+===================================================== */
+
+.requestAmount{
+  font-size:20px;
+  font-weight:800;
+}
+
+.requestType{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:8px;
+  font-size:9px;
+  font-weight:700;
+}
+
+.depositType{
+  background:#173c29;
+  color:#65ee9b;
+}
+
+.withdrawType{
+  background:#3d2025;
+  color:#ff7581;
+}
+
+.status{
+  padding:5px 8px;
+  border-radius:8px;
+  font-size:9px;
+  font-weight:700;
+}
+
+.pending{
+  background:#3d3018;
+  color:#ffbf59;
+}
+
+.approved{
+  background:#173c29;
+  color:#65ee9b;
+}
+
+.rejected{
+  background:#3d2025;
+  color:#ff7581;
+}
+
+/* =====================================================
+   USERS
+===================================================== */
+
+.userAvatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+}
+
+.userInfo{
+  flex:1;
+}
+
+.userInfo b{
+  display:block;
+  font-size:13px;
+}
+
+.userInfo small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px;
+}
+
+.balance{
+  color:#69e99a;
+  font-weight:800;
+  font-size:13px;
+}
+
+/* =====================================================
+   GIFT CODE
+===================================================== */
+
+/* 🔴 NEW: GIFT CODE SYSTEM */
+
+.giftHero{
+  background:linear-gradient(135deg,#211c43,#111319);
+  border:1px solid #40376d;
+  border-radius:18px;
+  padding:17px;
+  margin-bottom:15px;
+}
+
+.giftHero h2{
+  font-size:18px;
+}
+
+.giftHero p{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+}
+
+.giftCode{
+  font-size:16px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+.giftDetails{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-top:12px;
+}
+
+.giftDetail{
+  background:var(--card2);
+  padding:8px;
+  border-radius:9px;
+  text-align:center;
+}
+
+.giftDetail small{
+  color:var(--muted);
+  font-size:8px;
+}
+
+.giftDetail b{
+  display:block;
+  font-size:11px;
+  margin-top:3px;
+}
+
+/* =====================================================
+   PAYMENT
+===================================================== */
+
+/* 🔴 NEW: QR PAYMENT SYSTEM */
+
+.qrPreview{
+  width:190px;
+  height:190px;
+  object-fit:contain;
+  display:block;
+  background:#fff;
+  padding:8px;
+  border-radius:14px;
+  margin:10px auto 15px;
+}
+
+/* =====================================================
+   SUPPORT
+===================================================== */
+
+.ticket{
+  background:var(--card2);
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:8px;
+}
+
+.ticketIssue{
+  font-size:12px;
+  line-height:1.5;
+}
+
+.ticketDate{
+  color:var(--muted);
+  font-size:9px;
+  margin-top:6px;
+}
+
+/* =====================================================
+   BOTTOM NAV
+===================================================== */
+
+.bottomNav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:68px;
+  background:#0e1015f5;
+  backdrop-filter:blur(18px);
+  border-top:1px solid #242832;
+  z-index:40;
+}
+
+.navInner{
+  max-width:900px;
+  height:100%;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+}
+
+.navBtn{
+  background:transparent;
+  color:#6f7685;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  font-size:9px;
+}
+
+.navBtn i{
+  font-size:16px;
+}
+
+.navBtn.active{
+  color:#887cff;
+}
+
+/* =====================================================
+   FAB
+===================================================== */
+
+.fab{
+  position:fixed;
+  right:18px;
+  bottom:83px;
+  width:52px;
+  height:52px;
+  border-radius:17px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:#fff;
+  font-size:20px;
+  box-shadow:0 12px 35px #695cff55;
+  z-index:20;
+}
+
+/* =====================================================
+   MODALS
+===================================================== */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#000c;
+  z-index:100;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  padding:12px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modalBox{
+  width:100%;
+  max-width:560px;
+  max-height:90vh;
+  overflow:auto;
+  background:#111319;
+  border:1px solid #2b303b;
+  border-radius:22px 22px 15px 15px;
+  padding:18px;
+  animation:modalUp .22s ease;
+}
+
+@keyframes modalUp{
+  from{
+    opacity:0;
+    transform:translateY(45px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.modalHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.modalHeader h3{
+  font-size:17px;
+}
+
+.close{
+  width:32px;
+  height:32px;
+  border-radius:10px;
+  background:#20242d;
+  color:#aaa;
+  font-size:18px;
+}
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+#toast{
+  position:fixed;
+  left:50%;
+  bottom:84px;
+  transform:translateX(-50%) translateY(20px);
+  background:#20242d;
+  border:1px solid #363c49;
+  color:#fff;
+  padding:11px 15px;
+  border-radius:12px;
+  font-size:11px;
+  z-index:300;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  max-width:90%;
+  text-align:center;
+}
+
+#toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+.empty{
+  text-align:center;
+  color:#737a88;
+  padding:30px 10px;
+  font-size:12px;
+}
+
+.loading{
+  text-align:center;
+  color:#777e8d;
+  padding:25px;
+}
+
+@media(max-width:420px){
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .giftDetails{
+    grid-template-columns:1fr 1fr 1fr;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     LOGIN SCREEN
+===================================================== -->
+
+<section id="loginScreen">
+
+  <div class="loginBox">
+
+    <div class="logo">
+      <i class="fa-solid fa-trophy"></i>
+    </div>
+
+    <h1>Crazy eSports</h1>
+
+    <div class="loginSub">
+      Admin Control Panel
+    </div>
+
+    <input
+      id="adminEmail"
+      class="input"
+      type="email"
+      placeholder="Admin Email"
+    >
+
+    <input
+      id="adminPassword"
+      class="input"
+      type="password"
+      placeholder="Admin Password"
+    >
+
+    <button class="btn" onclick="adminLogin()">
+      <i class="fa-solid fa-right-to-bracket"></i>
+      Login as Admin
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     ADMIN APP
+===================================================== -->
+
+<section id="adminApp" class="hidden">
+
+<header class="header">
+
+  <div class="headerInner">
+
+    <div class="brand">
+
+      <div class="brandIcon">
+        <i class="fa-solid fa-trophy"></i>
+      </div>
+
+      <div class="brandText">
+        <b>Crazy eSports</b>
+        <small>Admin Control Panel</small>
+      </div>
+
+    </div>
+
+    <div class="adminBadge">
+      <i class="fa-solid fa-shield-halved"></i>
+      ADMIN
+    </div>
+
+  </div>
+
+</header>
+
+
+<main>
+
+
+<!-- =====================================================
+     HOME PAGE
+===================================================== -->
+
+<div class="page active" id="homePage">
+
+  <div class="pageTitle">
+    Dashboard
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <div class="statIcon">
+        <i class="fa-solid fa-users"></i>
+      </div>
+      <small>Total Users</small>
+      <strong id="statUsers">0</strong>
+    </div>
+
+    <div class="stat">
+      <div class="statIcon">
+        <i class="fa-solid fa-gamepad"></i>
+      </div>
+      <small>Tournaments</small>
+      <strong id="statTournaments">0</strong>
+    </div>
+
+    <div class="stat">
+      <div class="statIcon">
+        <i class="fa-solid fa-arrow-down"></i>
+      </div>
+      <small>Pending Deposits</small>
+      <strong id="statDeposits">0</strong>
+    </div>
+
+    <div class="stat">
+      <div class="statIcon">
+        <i class="fa-solid fa-arrow-up"></i>
+      </div>
+      <small>Pending Withdrawals</small>
+      <strong id="statWithdraws">0</strong>
+    </div>
+
+    <!-- 🔴 NEW: GIFT CODE STAT -->
+
+    <div class="stat">
+      <div class="statIcon">
+        <i class="fa-solid fa-gift"></i>
+      </div>
+      <small>Gift Codes</small>
+      <strong id="statGiftCodes">0</strong>
+    </div>
+
+    <div class="stat">
+      <div class="statIcon">
+        <i class="fa-solid fa-ticket"></i>
+      </div>
+      <small>Support Tickets</small>
+      <strong id="statTickets">0</strong>
+    </div>
+
+  </div>
+
+
+  <!-- PENDING REQUESTS -->
+
+  <div class="card">
+
+    <div class="cardTitle">
+
+      <h3>
+        <i class="fa-solid fa-clock"></i>
+        Pending Requests
+      </h3>
+
+      <button class="smallBtn primary"
+              onclick="goPage('requests',this)">
+        View All
+      </button>
+
+    </div>
+
+    <div id="homeRequests">
+      <div class="loading">
+        Loading...
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- QUICK SETTINGS -->
+
+  <div class="card">
+
+    <div class="cardTitle">
+      <h3>Quick Actions</h3>
+    </div>
+
+    <div class="cardActions">
+
+      <button class="smallBtn primary"
+              onclick="openTournamentModal()">
+        <i class="fa-solid fa-plus"></i>
+        Tournament
+      </button>
+
+      <button class="smallBtn"
+              onclick="goPage('giftcodes',this)">
+        <i class="fa-solid fa-gift"></i>
+        Gift Code
+      </button>
+
+      <button class="smallBtn"
+              onclick="goPage('settings',this)">
+        <i class="fa-solid fa-qrcode"></i>
+        Payment QR
+      </button>
+
+      <button class="smallBtn"
+              onclick="goPage('users',this)">
+        <i class="fa-solid fa-users"></i>
+        Users
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     GAMES PAGE
+===================================================== -->
+
+<div class="page" id="gamesPage">
+
+  <div class="row" style="margin-bottom:15px">
+
+    <div class="pageTitle" style="margin:0">
+      Tournaments
+    </div>
+
+    <button class="smallBtn primary"
+            onclick="openTournamentModal()">
+      <i class="fa-solid fa-plus"></i>
+      Add
+    </button>
+
+  </div>
+
+  <div id="tournamentList">
+    <div class="loading">
+      Loading tournaments...
+    </div>
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     REQUEST PAGE
+===================================================== -->
+
+<div class="page" id="requestsPage">
+
+  <div class="pageTitle">
+    Wallet Requests
+  </div>
+
+  <div id="requestList">
+    <div class="loading">
+      Loading requests...
+    </div>
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     USERS PAGE
+===================================================== -->
+
+<div class="page" id="usersPage">
+
+  <div class="pageTitle">
+    Users
+  </div>
+
+  <input
+    id="userSearch"
+    class="input"
+    placeholder="Search username or email..."
+    oninput="renderUsers()"
+  >
+
+  <div id="userList">
+    <div class="loading">
+      Loading users...
+    </div>
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     GIFT CODE PAGE
+===================================================== -->
+
+<!-- 🔴 NEW: COMPLETE GIFT CODE ADMIN PAGE -->
+
+<div class="page" id="giftcodesPage">
+
+  <div class="pageTitle">
+    Gift Codes 🎁
+  </div>
+
+  <div class="giftHero">
+
+    <h2>
+      Create Promotional Gift Code
+    </h2>
+
+    <p>
+      Users can redeem these codes from their User Panel.
+    </p>
+
+    <button
+      class="btn"
+      style="margin-top:13px"
+      onclick="openGiftModal()"
+    >
+      <i class="fa-solid fa-plus"></i>
+      Create Gift Code
+    </button>
+
+  </div>
+
+  <div id="giftCodeList">
+    <div class="loading">
+      Loading gift codes...
+    </div>
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     SETTINGS PAGE
+===================================================== -->
+
+<div class="page" id="settingsPage">
+
+  <div class="pageTitle">
+    Settings
+  </div>
+
+
+  <!-- PAYMENT SETTINGS -->
+
+  <div class="card">
+
+    <div class="cardTitle">
+
+      <h3>
+        <i class="fa-solid fa-wallet"></i>
+        Payment Settings
+      </h3>
+
+    </div>
+
+    <label class="muted">
+      Admin UPI ID
+    </label>
+
+    <input
+      id="settingUPI"
+      class="input"
+      placeholder="example@upi"
+    >
+
+    <!-- 🔴 NEW: QR PAYMENT -->
+
+    <label class="muted">
+      QR Code Image URL
+    </label>
+
+    <input
+      id="settingQR"
+      class="input"
+      placeholder="https://..."
+    >
+
+    <img
+      id="adminQRPreview"
+      class="qrPreview"
+      src=""
+      alt="QR Preview"
+    >
+
+    <button
+      class="btn"
+      onclick="savePaymentSettings()"
+    >
+      <i class="fa-solid fa-save"></i>
+      Save Payment Settings
+    </button>
+
+  </div>
+
+
+  <!-- SUPPORT -->
+
+  <div class="card">
+
+    <div class="cardTitle">
+
+      <h3>
+        <i class="fa-solid fa-headset"></i>
+        Support Tickets
+      </h3>
+
+    </div>
+
+    <div id="ticketList">
+      <div class="loading">
+        Loading tickets...
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ACCOUNT -->
+
+  <div class="card">
+
+    <div class="cardTitle">
+      <h3>Admin Account</h3>
+    </div>
+
+    <button
+      class="btn red"
+      onclick="adminLogout()"
+    >
+      <i class="fa-solid fa-right-from-bracket"></i>
+      Logout
+    </button>
+
+  </div>
+
+</div>
+
+
+</main>
+
+
+<!-- =====================================================
+     BOTTOM NAV
+===================================================== -->
+
+<nav class="bottomNav">
+
+  <div class="navInner">
+
+    <button
+      class="navBtn active"
+      onclick="goPage('home',this)"
+    >
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </button>
+
+    <button
+      class="navBtn"
+      onclick="goPage('games',this)"
+    >
+      <i class="fa-solid fa-gamepad"></i>
+      <span>Games<
