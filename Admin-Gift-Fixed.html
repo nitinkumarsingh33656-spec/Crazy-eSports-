@@ -1,0 +1,3788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Crazy eSports - Admin Panel</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#08090d;
+  --card:#111319;
+  --card2:#171a21;
+  --border:#282d38;
+  --primary:#695cff;
+  --primary2:#8b5cf6;
+  --green:#35d47c;
+  --red:#ff5967;
+  --orange:#ffae42;
+  --text:#ffffff;
+  --muted:#858c9b;
+}
+
+body{
+  font-family:Inter,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:80px;
+}
+
+button,
+input,
+textarea,
+select{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+  border:0;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+#loginScreen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at top,#211b45,#08090d 55%);
+}
+
+.loginBox{
+  width:100%;
+  max-width:420px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:25px;
+  padding:30px;
+  box-shadow:0 25px 80px #000b;
+}
+
+.logo{
+  width:75px;
+  height:75px;
+  border-radius:22px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:auto auto 16px;
+  font-size:32px;
+  box-shadow:0 15px 40px #695cff55;
+}
+
+.loginBox h1{
+  text-align:center;
+  font-size:26px;
+}
+
+.loginSub{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  margin:7px 0 25px;
+}
+
+.input{
+  width:100%;
+  padding:13px 14px;
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  color:#fff;
+  outline:none;
+  margin-bottom:12px;
+}
+
+.input:focus{
+  border-color:var(--primary);
+}
+
+textarea.input{
+  min-height:100px;
+  resize:vertical;
+}
+
+select.input{
+  appearance:auto;
+}
+
+.btn{
+  width:100%;
+  padding:13px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:#fff;
+  font-weight:700;
+}
+
+.btn.secondary{
+  background:#20242c;
+}
+
+.btn.green{
+  background:var(--green);
+  color:#07130c;
+}
+
+.btn.red{
+  background:var(--red);
+}
+
+.btn.orange{
+  background:var(--orange);
+  color:#171007;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+#adminApp{
+  max-width:900px;
+  margin:auto;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:30;
+  background:#08090ded;
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid #222631;
+  padding:14px 15px;
+}
+
+.headerInner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.brandIcon{
+  width:44px;
+  height:44px;
+  border-radius:13px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.brandText b{
+  display:block;
+  font-size:16px;
+}
+
+.brandText small{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.adminBadge{
+  background:#1b3024;
+  color:#6ff09d;
+  border:1px solid #28533a;
+  padding:7px 10px;
+  border-radius:10px;
+  font-size:10px;
+  font-weight:700;
+}
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+main{
+  padding:18px 14px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.pageTitle{
+  font-size:21px;
+  font-weight:800;
+  margin-bottom:15px;
+}
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-bottom:16px;
+}
+
+.stat{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:15px;
+}
+
+.statIcon{
+  width:35px;
+  height:35px;
+  border-radius:10px;
+  background:#1d2029;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:10px;
+  color:#9b90ff;
+}
+
+.stat small{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.stat strong{
+  display:block;
+  font-size:21px;
+  margin-top:4px;
+}
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:15px;
+  margin-bottom:13px;
+}
+
+.cardTitle{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.cardTitle h3{
+  font-size:15px;
+}
+
+.muted{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.divider{
+  height:1px;
+  background:#252a34;
+  margin:12px 0;
+}
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.smallBtn{
+  padding:8px 10px;
+  border-radius:9px;
+  background:#20242d;
+  color:#fff;
+  font-size:10px;
+  font-weight:700;
+}
+
+.smallBtn.primary{
+  background:var(--primary);
+}
+
+.smallBtn.green{
+  background:#173b28;
+  color:#6ff09d;
+}
+
+.smallBtn.red{
+  background:#3c1920;
+  color:#ff7782;
+}
+
+.smallBtn.orange{
+  background:#3c2c18;
+  color:#ffbd62;
+}
+
+/* =====================================================
+   TOURNAMENT CARD
+===================================================== */
+
+.tournamentCard{
+  overflow:hidden;
+}
+
+.tImage{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+  border-radius:13px;
+  background:#181b22;
+  margin-bottom:12px;
+}
+
+.tName{
+  font-size:17px;
+  font-weight:800;
+}
+
+.tMeta{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:12px;
+}
+
+.meta{
+  background:var(--card2);
+  border-radius:10px;
+  padding:9px;
+}
+
+.meta span{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+}
+
+.meta b{
+  display:block;
+  margin-top:3px;
+  font-size:12px;
+}
+
+.cardActions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:12px;
+}
+
+/* =====================================================
+   REQUESTS
+===================================================== */
+
+.requestAmount{
+  font-size:20px;
+  font-weight:800;
+}
+
+.requestType{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:8px;
+  font-size:9px;
+  font-weight:700;
+}
+
+.depositType{
+  background:#173c29;
+  color:#65ee9b;
+}
+
+.withdrawType{
+  background:#3d2025;
+  color:#ff7581;
+}
+
+.status{
+  padding:5px 8px;
+  border-radius:8px;
+  font-size:9px;
+  font-weight:700;
+}
+
+.pending{
+  background:#3d3018;
+  color:#ffbf59;
+}
+
+.approved{
+  background:#173c29;
+  color:#65ee9b;
+}
+
+.rejected{
+  background:#3d2025;
+  color:#ff7581;
+}
+
+/* =====================================================
+   USERS
+===================================================== */
+
+.userAvatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+}
+
+.userInfo{
+  flex:1;
+}
+
+.userInfo b{
+  display:block;
+  font-size:13px;
+}
+
+.userInfo small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px;
+}
+
+.balance{
+  color:#69e99a;
+  font-weight:800;
+  font-size:13px;
+}
+
+/* =====================================================
+   GIFT CODE
+===================================================== */
+
+/* 🔴 NEW: GIFT CODE SYSTEM */
+
+.giftHero{
+  background:linear-gradient(135deg,#211c43,#111319);
+  border:1px solid #40376d;
+  border-radius:18px;
+  padding:17px;
+  margin-bottom:15px;
+}
+
+.giftHero h2{
+  font-size:18px;
+}
+
+.giftHero p{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+}
+
+.giftCode{
+  font-size:16px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+.giftDetails{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-top:12px;
+}
+
+.giftDetail{
+  background:var(--card2);
+  padding:8px;
+  border-radius:9px;
+  text-align:center;
+}
+
+.giftDetail small{
+  color:var(--muted);
+  font-size:8px;
+}
+
+.giftDetail b{
+  display:block;
+  font-size:11px;
+  margin-top:3px;
+}
+
+/* =====================================================
+   PAYMENT
+===================================================== */
+
+/* 🔴 NEW: QR PAYMENT SYSTEM */
+
+.qrPreview{
+  width:190px;
+  height:190px;
+  object-fit:contain;
+  display:block;
+  background:#fff;
+  padding:8px;
+  border-radius:14px;
+  margin:10px auto 15px;
+}
+
+/* =====================================================
+   SUPPORT
+===================================================== */
+
+.ticket{
+  background:var(--card2);
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:8px;
+}
+
+.ticketIssue{
+  font-size:12px;
+  line-height:1.5;
+}
+
+.ticketDate{
+  color:var(--muted);
+  font-size:9px;
+  margin-top:6px;
+}
+
+/* =====================================================
+   BOTTOM NAV
+===================================================== */
+
+.bottomNav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:68px;
+  background:#0e1015f5;
+  backdrop-filter:blur(18px);
+  border-top:1px solid #242832;
+  z-index:40;
+}
+
+.navInner{
+  max-width:900px;
+  height:100%;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+}
+
+.navBtn{
+  background:transparent;
+  color:#6f7685;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  font-size:9px;
+}
+
+.navBtn i{
+  font-size:16px;
+}
+
+.navBtn.active{
+  color:#887cff;
+}
+
+/* =====================================================
+   FAB
+===================================================== */
+
+.fab{
+  position:fixed;
+  right:18px;
+  bottom:83px;
+  width:52px;
+  height:52px;
+  border-radius:17px;
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:#fff;
+  font-size:20px;
+  box-shadow:0 12px 35px #695cff55;
+  z-index:20;
+}
+
+/* =====================================================
+   MODALS
+===================================================== */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#000c;
+  z-index:100;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  padding:12px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modalBox{
+  width:100%;
+  max-width:560px;
+  max-height:90vh;
+  overflow:auto;
+  background:#111319;
+  border:1px solid #2b303b;
+  border-radius:22px 22px 15px 15px;
+  padding:18px;
+  animation:modalUp .22s ease;
+}
+
+@keyframes modalUp{
+  from{
+    opacity:0;
+    transform:translateY(45px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.modalHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.modalHeader h3{
+  font-size:17px;
+}
+
+.close{
+  width:32px;
+  height:32px;
+  border-radius:10px;
+  background:#20242d;
+  color:#aaa;
+  font-size:18px;
+}
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+#toast{
+  position:fixed;
+  left:50%;
+  bottom:84px;
+  transform:translateX(-50%) translateY(20px);
+  background:#20242d;
+  border:1px solid #363c49;
+  color:#fff;
+  padding:11px 15px;
+  border-radius:12px;
+  font-size:11px;
+  z-index:300;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  max-width:90%;
+  text-align:center;
+}
+
+#toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+.empty{
+  text-align:center;
+  color:#737a88;
+  padding:30px 10px;
+  font-size:12px;
+}
+
+.loading{
+  text-align:center;
+  color:#777e8d;
+  padding:25px;
+}
+
+@media(max-width:420px){
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .giftDetails{
+    grid-template-columns:1fr 1fr 1fr;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     LOGIN SCREEN
+===================================================== -->
+
+<section id="loginScreen">
+
+  <div class="loginBox">
+
+    <div class="logo">
+      <i class="fa-solid fa-trophy"></i>
+    </div>
+
+    <h1>Crazy eSports</h1>
+
+    <div class="loginSub">
+      Admin Control Panel
+    </div>
+
+    <input
+      id="adminEmail"
+      class="input"
+      type="email"
+      placeholder="Admin Email"
+    >
+
+    <input
+      id="adminPassword"
+      class="input"
+      type="password"
+      placeholder="Admin Password"
+    >
+
+    <button class="btn" onclick="adminLogin()">
+      <i class="fa-solid fa-right-to-bracket"></i>
+      Login as Admin
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     ADMIN APP
+===================================================== -->
+
+<section id="adminApp" class="hidden">
+
+<header class="header">
+
+  <div class="headerInner">
+
+    <div class="brand">
+
+      <div class="brandIcon">
+        <i class="fa-solid fa-trophy"></i>
+      </div>
+
+      <div class="brandText">
+        <b>Crazy eSports</b>
+        <small>Admin Control Panel</small>
+      </div>
+
+    </div>
+
+    <div class="adminBadge">
+      <i class="fa-solid fa-shield-halved"></i>
+      ADMIN
+    </div>
+
+  </div>
+
+</header>
+
+
+<main>
+
+
+<!-- =====================================================
+     HOME PAGE
+===================================================== -->
+
+<div class="page active" id="homePage">
+
+  <div class="pageTitle">
+    Dashboard
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <div class="statIcon">
+        <i class="fa-solid fa-users"></i>
+      </div>
+      <small>Total Users</small>
+      <strong id="statUsers">0</strong>
+    </div>
+
+    <div class="stat">
+      <div class="statIcon">
+        <i class="fa-solid fa-gamepad"></i>
+      </div>
+      <small>Tournaments</small>
+      <strong id="statTournaments">0</strong>
+    </div>
+
+    <div class="stat">
+      <div class="statIcon">
+        <i class="fa-solid fa-arrow-down"></i>
+      </div>
+      <small>Pending Deposits</small>
+      <strong id="statDeposits">0</strong>
+    </div>
+
+    <div class="stat">
+      <div class="statIcon">
+        <i class="fa-solid fa-arrow-up"></i>
+      </div>
+      <small>Pending Withdrawals</small>
+      <strong id="statWithdraws">0</strong>
+    </div>
+
+    <!-- 🔴 NEW: GIFT CODE STAT -->
+
+    <div class="stat">
+      <div class="statIcon">
+        <i class="fa-solid fa-gift"></i>
+      </div>
+      <small>Gift Codes</small>
+      <strong id="statGiftCodes">0</strong>
+    </div>
+
+    <div class="stat">
+      <div class="statIcon">
+        <i class="fa-solid fa-ticket"></i>
+      </div>
+      <small>Support Tickets</small>
+      <strong id="statTickets">0</strong>
+    </div>
+
+  </div>
+
+
+  <!-- PENDING REQUESTS -->
+
+  <div class="card">
+
+    <div class="cardTitle">
+
+      <h3>
+        <i class="fa-solid fa-clock"></i>
+        Pending Requests
+      </h3>
+
+      <button class="smallBtn primary"
+              onclick="goPage('requests',this)">
+        View All
+      </button>
+
+    </div>
+
+    <div id="homeRequests">
+      <div class="loading">
+        Loading...
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- QUICK SETTINGS -->
+
+  <div class="card">
+
+    <div class="cardTitle">
+      <h3>Quick Actions</h3>
+    </div>
+
+    <div class="cardActions">
+
+      <button class="smallBtn primary"
+              onclick="openTournamentModal()">
+        <i class="fa-solid fa-plus"></i>
+        Tournament
+      </button>
+
+      <button class="smallBtn"
+              onclick="goPage('giftcodes',this)">
+        <i class="fa-solid fa-gift"></i>
+        Gift Code
+      </button>
+
+      <button class="smallBtn"
+              onclick="goPage('settings',this)">
+        <i class="fa-solid fa-qrcode"></i>
+        Payment QR
+      </button>
+
+      <button class="smallBtn"
+              onclick="goPage('users',this)">
+        <i class="fa-solid fa-users"></i>
+        Users
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     GAMES PAGE
+===================================================== -->
+
+<div class="page" id="gamesPage">
+
+  <div class="row" style="margin-bottom:15px">
+
+    <div class="pageTitle" style="margin:0">
+      Tournaments
+    </div>
+
+    <button class="smallBtn primary"
+            onclick="openTournamentModal()">
+      <i class="fa-solid fa-plus"></i>
+      Add
+    </button>
+
+  </div>
+
+  <div id="tournamentList">
+    <div class="loading">
+      Loading tournaments...
+    </div>
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     REQUEST PAGE
+===================================================== -->
+
+<div class="page" id="requestsPage">
+
+  <div class="pageTitle">
+    Wallet Requests
+  </div>
+
+  <div id="requestList">
+    <div class="loading">
+      Loading requests...
+    </div>
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     USERS PAGE
+===================================================== -->
+
+<div class="page" id="usersPage">
+
+  <div class="pageTitle">
+    Users
+  </div>
+
+  <input
+    id="userSearch"
+    class="input"
+    placeholder="Search username or email..."
+    oninput="renderUsers()"
+  >
+
+  <div id="userList">
+    <div class="loading">
+      Loading users...
+    </div>
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     GIFT CODE PAGE
+===================================================== -->
+
+<!-- 🔴 NEW: COMPLETE GIFT CODE ADMIN PAGE -->
+
+<div class="page" id="giftcodesPage">
+
+  <div class="pageTitle">
+    Gift Codes 🎁
+  </div>
+
+  <div class="giftHero">
+
+    <h2>
+      Create Promotional Gift Code
+    </h2>
+
+    <p>
+      Users can redeem these codes from their User Panel.
+    </p>
+
+    <button
+      class="btn"
+      style="margin-top:13px"
+      onclick="openGiftModal()"
+    >
+      <i class="fa-solid fa-plus"></i>
+      Create Gift Code
+    </button>
+
+  </div>
+
+  <div id="giftCodeList">
+    <div class="loading">
+      Loading gift codes...
+    </div>
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     SETTINGS PAGE
+===================================================== -->
+
+<div class="page" id="settingsPage">
+
+  <div class="pageTitle">
+    Settings
+  </div>
+
+
+  <!-- PAYMENT SETTINGS -->
+
+  <div class="card">
+
+    <div class="cardTitle">
+
+      <h3>
+        <i class="fa-solid fa-wallet"></i>
+        Payment Settings
+      </h3>
+
+    </div>
+
+    <label class="muted">
+      Admin UPI ID
+    </label>
+
+    <input
+      id="settingUPI"
+      class="input"
+      placeholder="example@upi"
+    >
+
+    <!-- 🔴 NEW: QR PAYMENT -->
+
+    <label class="muted">
+      QR Code Image URL
+    </label>
+
+    <input
+      id="settingQR"
+      class="input"
+      placeholder="https://..."
+    >
+
+    <img
+      id="adminQRPreview"
+      class="qrPreview"
+      src=""
+      alt="QR Preview"
+    >
+
+    <button
+      class="btn"
+      onclick="savePaymentSettings()"
+    >
+      <i class="fa-solid fa-save"></i>
+      Save Payment Settings
+    </button>
+
+  </div>
+
+
+  <!-- SUPPORT -->
+
+  <div class="card">
+
+    <div class="cardTitle">
+
+      <h3>
+        <i class="fa-solid fa-headset"></i>
+        Support Tickets
+      </h3>
+
+    </div>
+
+    <div id="ticketList">
+      <div class="loading">
+        Loading tickets...
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ACCOUNT -->
+
+  <div class="card">
+
+    <div class="cardTitle">
+      <h3>Admin Account</h3>
+    </div>
+
+    <button
+      class="btn red"
+      onclick="adminLogout()"
+    >
+      <i class="fa-solid fa-right-from-bracket"></i>
+      Logout
+    </button>
+
+  </div>
+
+</div>
+
+
+</main>
+
+
+<!-- =====================================================
+     BOTTOM NAV
+===================================================== -->
+
+<nav class="bottomNav">
+
+  <div class="navInner">
+
+    <button
+      class="navBtn active"
+      onclick="goPage('home',this)"
+    >
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </button>
+
+    <button
+      class="navBtn"
+      onclick="goPage('games',this)"
+    >
+      <i class="fa-solid fa-gamepad"></i>
+      <span>Games</span>
+    </button>
+
+    <button
+      class="navBtn"
+      onclick="goPage('requests',this)"
+    >
+      <i class="fa-solid fa-wallet"></i>
+      <span>Requests</span>
+    </button>
+
+    <button
+      class="navBtn"
+      onclick="goPage('users',this)"
+    >
+      <i class="fa-solid fa-users"></i>
+      <span>Users</span>
+    </button>
+
+    <button
+      class="navBtn"
+      onclick="goPage('settings',this)"
+    >
+      <i class="fa-solid fa-gear"></i>
+      <span>Settings</span>
+    </button>
+
+  </div>
+
+</nav>
+
+
+<button
+  class="fab"
+  onclick="openTournamentModal()"
+>
+  <i class="fa-solid fa-plus"></i>
+</button>
+
+</section>
+
+
+<!-- =====================================================
+     TOURNAMENT MODAL
+===================================================== -->
+
+<div class="modal" id="tournamentModal">
+
+  <div class="modalBox">
+
+    <div class="modalHeader">
+
+      <h3 id="tournamentModalTitle">
+        Create Tournament
+      </h3>
+
+      <button
+        class="close"
+        onclick="closeModal('tournamentModal')"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <input id="tournamentId" type="hidden">
+
+    <input
+      id="tournamentTitle"
+      class="input"
+      placeholder="Tournament title"
+    >
+
+    <!-- 🔴 NEW: TOURNAMENT DATE -->
+
+    <label class="muted">
+      Tournament Date
+    </label>
+
+    <input
+      id="tournamentDate"
+      class="input"
+      type="date"
+    >
+
+    <!-- 🔴 NEW: TOURNAMENT TIME -->
+
+    <label class="muted">
+      Tournament Time
+    </label>
+
+    <input
+      id="tournamentTime"
+      class="input"
+      type="time"
+    >
+
+    <input
+      id="tournamentFee"
+      class="input"
+      type="number"
+      min="0"
+      placeholder="Entry Fee ₹"
+    >
+
+    <input
+      id="tournamentPool"
+      class="input"
+      type="number"
+      min="0"
+      placeholder="Prize Pool ₹"
+    >
+
+    <input
+      id="tournamentTotal"
+      class="input"
+      type="number"
+      min="1"
+      placeholder="Total Slots"
+    >
+
+    <input
+      id="tournamentImage"
+      class="input"
+      placeholder="Tournament Image URL"
+    >
+
+    <button
+      class="btn"
+      onclick="saveTournament()"
+    >
+      <i class="fa-solid fa-save"></i>
+      Save Tournament
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     ROOM MODAL
+===================================================== -->
+
+<div class="modal" id="roomModal">
+
+  <div class="modalBox">
+
+    <div class="modalHeader">
+
+      <h3>
+        Room Details
+      </h3>
+
+      <button
+        class="close"
+        onclick="closeModal('roomModal')"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <input id="roomTournamentId" type="hidden">
+
+    <input
+      id="roomId"
+      class="input"
+      placeholder="Room ID"
+    >
+
+    <input
+      id="roomPassword"
+      class="input"
+      placeholder="Room Password"
+    >
+
+    <button
+      class="btn"
+      onclick="saveRoom()"
+    >
+      Update Room
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     USER BALANCE MODAL
+===================================================== -->
+
+<div class="modal" id="balanceModal">
+
+  <div class="modalBox">
+
+    <div class="modalHeader">
+
+      <h3>
+        Edit User Balance
+      </h3>
+
+      <button
+        class="close"
+        onclick="closeModal('balanceModal')"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <input id="balanceUserId" type="hidden">
+
+    <div
+      id="balanceUserInfo"
+      class="muted"
+      style="margin-bottom:12px"
+    ></div>
+
+    <input
+      id="newBalance"
+      class="input"
+      type="number"
+      min="0"
+      placeholder="New Balance ₹"
+    >
+
+    <button
+      class="btn"
+      onclick="saveUserBalance()"
+    >
+      Save Balance
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     REQUEST MODAL
+===================================================== -->
+
+<div class="modal" id="requestModal">
+
+  <div class="modalBox">
+
+    <div class="modalHeader">
+
+      <h3>
+        Wallet Request
+      </h3>
+
+      <button
+        class="close"
+        onclick="closeModal('requestModal')"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <div id="requestDetails"></div>
+
+    <textarea
+      id="rejectReason"
+      class="input"
+      placeholder="Rejection reason (only required for reject)"
+    ></textarea>
+
+    <div class="cardActions">
+
+      <button
+        class="btn green"
+        onclick="processRequest('approved')"
+      >
+        Approve
+      </button>
+
+      <button
+        class="btn red"
+        onclick="processRequest('rejected')"
+      >
+        Reject
+      </button>
+
+    </div>
+
+    <input id="selectedRequestId" type="hidden">
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     GIFT CODE MODAL
+===================================================== -->
+
+<!-- 🔴 NEW: GIFT CODE CREATE MODAL -->
+
+<div class="modal" id="giftModal">
+
+  <div class="modalBox">
+
+    <div class="modalHeader">
+
+      <h3>
+        Create Gift Code 🎁
+      </h3>
+
+      <button
+        class="close"
+        onclick="closeModal('giftModal')"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <input
+      id="giftCode"
+      class="input"
+      placeholder="Gift Code e.g. CRAZY50"
+    >
+
+    <input
+      id="giftAmount"
+      class="input"
+      type="number"
+      min="1"
+      placeholder="Reward Amount ₹"
+    >
+
+    <input
+      id="giftMaxUses"
+      class="input"
+      type="number"
+      min="1"
+      placeholder="Maximum Uses"
+    >
+
+    <label class="muted">
+      Expiry Date (optional)
+    </label>
+
+    <input
+      id="giftExpiry"
+      class="input"
+      type="date"
+    >
+
+    <button
+      class="btn"
+      onclick="createGiftCode()"
+    >
+      <i class="fa-solid fa-gift"></i>
+      Create Gift Code
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     CONFIRM MODAL
+===================================================== -->
+
+<div class="modal" id="confirmModal">
+
+  <div class="modalBox">
+
+    <div class="modalHeader">
+
+      <h3>
+        Confirm Action
+      </h3>
+
+      <button
+        class="close"
+        onclick="closeModal('confirmModal')"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <div
+      id="confirmText"
+      class="muted"
+      style="line-height:1.6;margin-bottom:15px"
+    ></div>
+
+    <div class="cardActions">
+
+      <button
+        class="btn secondary"
+        onclick="closeModal('confirmModal')"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="btn"
+        onclick="runConfirmedAction()"
+      >
+        Confirm
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div id="toast"></div>
+
+
+<!-- =====================================================
+     FIREBASE SCRIPTS
+===================================================== -->
+
+<script type="module">
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  runTransaction,
+  serverTimestamp,
+  Timestamp
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+
+/* 🔴🔴🔴 FIREBASE CONFIG START 🔴🔴🔴
+   YE TUMHARA FIREBASE CONFIG HAI.
+   AGAR KABHI FIREBASE PROJECT CHANGE KARO
+   TO SIRF ISI BLOCK KO CHANGE KARNA.
+*/
+
+const firebaseConfig = {
+  apiKey: "AIzaSyADFNTi3Tct_vNrH4_gq-mdfCBK1B98xfM",
+  authDomain: "crazy-esports-5d42b.firebaseapp.com",
+  databaseURL: "https://crazy-esports-5d42b-default-rtdb.firebaseio.com",
+  projectId: "crazy-esports-5d42b",
+  storageBucket: "crazy-esports-5d42b.firebasestorage.app",
+  messagingSenderId: "650811757226",
+  appId: "1:650811757226:web:1a336310a46345bd8df6d3"
+};
+
+
+/* 🔴🔴🔴 FIREBASE CONFIG END 🔴🔴🔴 */
+
+
+/* 🔴🔴🔴 ADMIN EMAIL START 🔴🔴🔴 */
+
+const ADMIN_EMAIL =
+  "nitinkumarsingh7271@gmail.com";
+
+/* 🔴🔴🔴 ADMIN EMAIL END 🔴🔴🔴 */
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(app);
+
+const db =
+  getFirestore(app);
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let tournaments = [];
+let users = [];
+let requests = [];
+let giftCodes = [];
+let tickets = [];
+
+let selectedRequest = null;
+
+let unsubscribe = [];
+
+
+/* =====================================================
+   UTILITY
+===================================================== */
+
+function $(id){
+  return document.getElementById(id);
+}
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function money(value){
+
+  return Number(value || 0)
+    .toLocaleString("en-IN");
+
+}
+
+function toast(message){
+
+  const el = $("toast");
+
+  el.textContent = message;
+
+  el.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer =
+    setTimeout(()=>{
+      el.classList.remove("show");
+    },2700);
+
+}
+
+function openModal(id){
+  $(id).classList.add("show");
+}
+
+function closeModal(id){
+  $(id).classList.remove("show");
+}
+
+window.closeModal = closeModal;
+
+function formatDate(date){
+
+  if(!date)
+    return "Not set";
+
+  try{
+
+    return new Date(date+"T00:00:00")
+      .toLocaleDateString(
+        "en-IN",
+        {
+          day:"2-digit",
+          month:"short",
+          year:"numeric"
+        }
+      );
+
+  }catch{
+    return date;
+  }
+
+}
+
+function formatTime(time){
+
+  if(!time)
+    return "Not set";
+
+  return time;
+
+}
+
+function formatTimestamp(ts){
+
+  if(!ts)
+    return "Just now";
+
+  try{
+
+    const d =
+      ts.toDate
+      ? ts.toDate()
+      : new Date(ts);
+
+    return d.toLocaleString(
+      "en-IN",
+      {
+        day:"2-digit",
+        month:"short",
+        year:"numeric",
+        hour:"2-digit",
+        minute:"2-digit"
+      }
+    );
+
+  }catch{
+    return "";
+  }
+
+}
+
+
+/* =====================================================
+   AUTH LOGIN
+===================================================== */
+
+window.adminLogin = async function(){
+
+  const email =
+    $("adminEmail").value.trim();
+
+  const password =
+    $("adminPassword").value;
+
+  if(!email || !password){
+
+    toast("Enter email and password.");
+
+    return;
+  }
+
+  if(email.toLowerCase() !==
+     ADMIN_EMAIL.toLowerCase()){
+
+    toast("This email is not the admin email.");
+
+    return;
+  }
+
+  try{
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      error.code === "auth/invalid-credential"
+      ? "Invalid admin email or password."
+      : error.message
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+onAuthStateChanged(
+  auth,
+  async user=>{
+
+    if(!user){
+
+      $("loginScreen")
+        .classList.remove("hidden");
+
+      $("adminApp")
+        .classList.add("hidden");
+
+      stopRealtime();
+
+      return;
+    }
+
+    if(
+      user.email?.toLowerCase() !==
+      ADMIN_EMAIL.toLowerCase()
+    ){
+
+      toast("Access denied.");
+
+      await signOut(auth);
+
+      return;
+    }
+
+    $("loginScreen")
+      .classList.add("hidden");
+
+    $("adminApp")
+      .classList.remove("hidden");
+
+    startRealtime();
+
+  }
+);
+
+
+/* =====================================================
+   REALTIME
+===================================================== */
+
+function stopRealtime(){
+
+  unsubscribe.forEach(fn=>{
+    try{fn()}catch{}
+  });
+
+  unsubscribe = [];
+
+}
+
+
+function startRealtime(){
+
+  stopRealtime();
+
+
+  /* USERS */
+
+  unsubscribe.push(
+
+    onSnapshot(
+      collection(db,"users"),
+      snap=>{
+
+        users = [];
+
+        snap.forEach(d=>{
+          users.push({
+            id:d.id,
+            ...d.data()
+          });
+        });
+
+        $("statUsers").textContent =
+          users.length;
+
+        renderUsers();
+
+      },
+      error=>console.error(error)
+    )
+
+  );
+
+
+  /* TOURNAMENTS */
+
+  unsubscribe.push(
+
+    onSnapshot(
+      collection(db,"tournaments"),
+      snap=>{
+
+        tournaments = [];
+
+        snap.forEach(d=>{
+          tournaments.push({
+            id:d.id,
+            ...d.data()
+          });
+        });
+
+        tournaments.sort((a,b)=>{
+
+          const aa =
+            `${a.date||"9999-99-99"} ${a.time||"99:99"}`;
+
+          const bb =
+            `${b.date||"9999-99-99"} ${b.time||"99:99"}`;
+
+          return aa.localeCompare(bb);
+
+        });
+
+        $("statTournaments").textContent =
+          tournaments.length;
+
+        renderTournaments();
+
+      },
+      error=>console.error(error)
+    )
+
+  );
+
+
+  /* WALLET REQUESTS */
+
+  unsubscribe.push(
+
+    onSnapshot(
+      query(
+        collection(db,"wallet_requests"),
+        orderBy("timestamp","desc")
+      ),
+      snap=>{
+
+        requests = [];
+
+        snap.forEach(d=>{
+          requests.push({
+            id:d.id,
+            ...d.data()
+          });
+        });
+
+        const pendingDeposits =
+          requests.filter(
+            r=>r.type==="deposit" &&
+               r.status==="pending"
+          ).length;
+
+        const pendingWithdraws =
+          requests.filter(
+            r=>r.type==="withdraw" &&
+               r.status==="pending"
+          ).length;
+
+        $("statDeposits").textContent =
+          pendingDeposits;
+
+        $("statWithdraws").textContent =
+          pendingWithdraws;
+
+        renderRequests();
+        renderHomeRequests();
+
+      },
+      error=>console.error(error)
+    )
+
+  );
+
+
+  /* 🔴 NEW: GIFT CODES REALTIME */
+
+  unsubscribe.push(
+
+    onSnapshot(
+      collection(db,"gift_codes"),
+      snap=>{
+
+        giftCodes = [];
+
+        snap.forEach(d=>{
+          giftCodes.push({
+            id:d.id,
+            ...d.data()
+          });
+        });
+
+        giftCodes.sort((a,b)=>{
+
+          const aa =
+            a.createdAt?.seconds || 0;
+
+          const bb =
+            b.createdAt?.seconds || 0;
+
+          return bb-aa;
+
+        });
+
+        $("statGiftCodes").textContent =
+          giftCodes.length;
+
+        renderGiftCodes();
+
+      },
+      error=>console.error(error)
+    )
+
+  );
+
+
+  /* SUPPORT */
+
+  unsubscribe.push(
+
+    onSnapshot(
+      query(
+        collection(db,"support_tickets"),
+        orderBy("date","desc")
+      ),
+      snap=>{
+
+        tickets=[];
+
+        snap.forEach(d=>{
+          tickets.push({
+            id:d.id,
+            ...d.data()
+          });
+        });
+
+        $("statTickets").textContent =
+          tickets.filter(
+            x=>x.status==="open"
+          ).length;
+
+        renderTickets();
+
+      },
+      error=>console.error(error)
+    )
+
+  );
+
+
+  loadPaymentSettings();
+
+}
+
+
+/* =====================================================
+   PAGE NAVIGATION
+===================================================== */
+
+window.goPage = function(page,button){
+
+  document.querySelectorAll(".page")
+    .forEach(p=>{
+      p.classList.remove("active");
+    });
+
+  const pageEl =
+    $(page+"Page");
+
+  if(pageEl)
+    pageEl.classList.add("active");
+
+  document.querySelectorAll(".navBtn")
+    .forEach(b=>{
+      b.classList.remove("active");
+    });
+
+  if(button)
+    button.classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+};
+
+
+/* =====================================================
+   TOURNAMENT RENDER
+===================================================== */
+
+function renderTournaments(){
+
+  const box =
+    $("tournamentList");
+
+  if(!tournaments.length){
+
+    box.innerHTML =
+      `<div class="empty">
+        No tournaments created yet.
+      </div>`;
+
+    return;
+  }
+
+  box.innerHTML =
+    tournaments.map(t=>{
+
+      const filled =
+        Number(t.filled || 0);
+
+      const total =
+        Number(t.total || 0);
+
+      return `
+
+      <div class="card tournamentCard">
+
+        ${
+          t.image
+          ? `
+          <img
+            class="tImage"
+            src="${escapeHtml(t.image)}"
+            onerror="this.style.display='none'"
+          >
+          `
+          : ""
+        }
+
+        <div class="tName">
+          ${escapeHtml(t.title || "Tournament")}
+        </div>
+
+        <div class="tMeta">
+
+          <div class="meta">
+            <span>Date</span>
+            <b>${escapeHtml(formatDate(t.date))}</b>
+          </div>
+
+          <div class="meta">
+            <span>Time</span>
+            <b>${escapeHtml(formatTime(t.time))}</b>
+          </div>
+
+          <div class="meta">
+            <span>Entry Fee</span>
+            <b>₹${money(t.fee)}</b>
+          </div>
+
+          <div class="meta">
+            <span>Prize Pool</span>
+            <b>₹${money(t.pool)}</b>
+          </div>
+
+          <div class="meta">
+            <span>Players</span>
+            <b>${filled}/${total}</b>
+          </div>
+
+          <div class="meta">
+            <span>Room</span>
+            <b>${t.roomId ? "Added" : "Not Added"}</b>
+          </div>
+
+        </div>
+
+        <div class="cardActions">
+
+          <button
+            class="smallBtn primary"
+            onclick="editTournament('${t.id}')"
+          >
+            <i class="fa-solid fa-pen"></i>
+            Edit
+          </button>
+
+          <button
+            class="smallBtn"
+            onclick="editRoom('${t.id}')"
+          >
+            <i class="fa-solid fa-key"></i>
+            Room
+          </button>
+
+          <button
+            class="smallBtn red"
+            onclick="deleteTournament('${t.id}')"
+          >
+            <i class="fa-solid fa-trash"></i>
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   TOURNAMENT MODAL
+===================================================== */
+
+window.openTournamentModal = function(){
+
+  $("tournamentModalTitle").textContent =
+    "Create Tournament";
+
+  $("tournamentId").value="";
+  $("tournamentTitle").value="";
+  $("tournamentDate").value="";
+  $("tournamentTime").value="";
+  $("tournamentFee").value="";
+  $("tournamentPool").value="";
+  $("tournamentTotal").value="";
+  $("tournamentImage").value="";
+
+  openModal("tournamentModal");
+
+};
+
+
+window.editTournament = function(id){
+
+  const t =
+    tournaments.find(x=>x.id===id);
+
+  if(!t) return;
+
+  $("tournamentModalTitle").textContent =
+    "Edit Tournament";
+
+  $("tournamentId").value=id;
+
+  $("tournamentTitle").value =
+    t.title || "";
+
+  $("tournamentDate").value =
+    t.date || "";
+
+  $("tournamentTime").value =
+    t.time || "";
+
+  $("tournamentFee").value =
+    t.fee ?? "";
+
+  $("tournamentPool").value =
+    t.pool ?? "";
+
+  $("tournamentTotal").value =
+    t.total ?? "";
+
+  $("tournamentImage").value =
+    t.image || "";
+
+  openModal("tournamentModal");
+
+};
+
+
+window.saveTournament = async function(){
+
+  const id =
+    $("tournamentId").value.trim();
+
+  const title =
+    $("tournamentTitle").value.trim();
+
+  const date =
+    $("tournamentDate").value;
+
+  const time =
+    $("tournamentTime").value;
+
+  const fee =
+    Number($("tournamentFee").value || 0);
+
+  const pool =
+    Number($("tournamentPool").value || 0);
+
+  const total =
+    Number($("tournamentTotal").value || 0);
+
+  const image =
+    $("tournamentImage").value.trim();
+
+  if(!title){
+
+    toast("Enter tournament title.");
+
+    return;
+  }
+
+  if(!date){
+
+    toast("Select tournament date.");
+
+    return;
+  }
+
+  if(!time){
+
+    toast("Select tournament time.");
+
+    return;
+  }
+
+  if(total <= 0){
+
+    toast("Enter valid total slots.");
+
+    return;
+  }
+
+  try{
+
+    if(id){
+
+      await updateDoc(
+        doc(db,"tournaments",id),
+        {
+          title,
+          date,
+          time,
+          fee,
+          pool,
+          total,
+          image,
+          updatedAt:serverTimestamp()
+        }
+      );
+
+      toast("Tournament updated.");
+
+    }else{
+
+      await addDoc(
+        collection(db,"tournaments"),
+        {
+          title,
+          date,
+          time,
+          fee,
+          pool,
+          total,
+          image,
+          filled:0,
+          roomId:"",
+          password:"",
+          createdAt:serverTimestamp()
+        }
+      );
+
+      toast("Tournament created.");
+
+    }
+
+    closeModal("tournamentModal");
+
+  }catch(error){
+
+    console.error(error);
+
+    toast("Unable to save tournament.");
+
+  }
+
+};
+
+
+/* =====================================================
+   DELETE TOURNAMENT
+===================================================== */
+
+let confirmCallback = null;
+
+window.confirmAction = function(message,callback){
+
+  $("confirmText").textContent =
+    message;
+
+  confirmCallback =
+    callback;
+
+  openModal("confirmModal");
+
+};
+
+window.runConfirmedAction = async function(){
+
+  closeModal("confirmModal");
+
+  if(!confirmCallback)
+    return;
+
+  const callback =
+    confirmCallback;
+
+  confirmCallback=null;
+
+  try{
+    await callback();
+  }catch(error){
+    console.error(error);
+    toast(error.message || "Action failed.");
+  }
+
+};
+
+
+window.deleteTournament = function(id){
+
+  const t =
+    tournaments.find(x=>x.id===id);
+
+  if(!t) return;
+
+  confirmAction(
+    `Delete "${t.title}"? This action cannot be undone.`,
+    async()=>{
+
+      await deleteDoc(
+        doc(db,"tournaments",id)
+      );
+
+      toast("Tournament deleted.");
+
+    }
+  );
+
+};
+
+
+/* =====================================================
+   ROOM
+===================================================== */
+
+window.editRoom = function(id){
+
+  const t =
+    tournaments.find(x=>x.id===id);
+
+  if(!t) return;
+
+  $("roomTournamentId").value=id;
+
+  $("roomId").value =
+    t.roomId || "";
+
+  $("roomPassword").value =
+    t.password || "";
+
+  openModal("roomModal");
+
+};
+
+
+window.saveRoom = async function(){
+
+  const id =
+    $("roomTournamentId").value;
+
+  if(!id) return;
+
+  try{
+
+    await updateDoc(
+      doc(db,"tournaments",id),
+      {
+        roomId:$("roomId").value.trim(),
+        password:$("roomPassword").value.trim(),
+        roomUpdatedAt:serverTimestamp()
+      }
+    );
+
+    closeModal("roomModal");
+
+    toast("Room details updated.");
+
+  }catch(error){
+
+    console.error(error);
+
+    toast("Unable to update room.");
+
+  }
+
+};
+
+
+/* =====================================================
+   REQUEST RENDER
+===================================================== */
+
+function requestHTML(r){
+
+  const typeClass =
+    r.type==="deposit"
+    ? "depositType"
+    : "withdrawType";
+
+  return `
+
+    <div class="card">
+
+      <div class="row">
+
+        <div>
+
+          <span class="requestType ${typeClass}">
+            ${escapeHtml(
+              r.type==="deposit"
+              ? "DEPOSIT"
+              : "WITHDRAW"
+            )}
+          </span>
+
+          <div style="margin-top:8px">
+            <b>${escapeHtml(r.username || "User")}</b>
+          </div>
+
+          <div class="muted">
+            ${escapeHtml(r.email || "")}
+          </div>
+
+        </div>
+
+        <div class="requestAmount">
+          ₹${money(r.amount)}
+        </div>
+
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="muted">
+
+        ${
+          r.type==="deposit"
+          ? "UTR: "
+          : "UPI: "
+        }
+
+        <b style="color:#fff">
+          ${escapeHtml(
+            r.utr || r.userUpi || "Not provided"
+          )}
+        </b>
+
+      </div>
+
+      <div class="muted" style="margin-top:6px">
+        ${formatTimestamp(r.timestamp)}
+      </div>
+
+      <div style="margin-top:10px">
+
+        <span class="status ${r.status || "pending"}">
+          ${escapeHtml(
+            (r.status || "pending").toUpperCase()
+          )}
+        </span>
+
+      </div>
+
+      ${
+        r.status==="pending"
+        ? `
+        <button
+          class="btn"
+          style="margin-top:12px"
+          onclick="openRequest('${r.id}')"
+        >
+          Review Request
+        </button>
+        `
+        : ""
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+function renderRequests(){
+
+  const box =
+    $("requestList");
+
+  if(!requests.length){
+
+    box.innerHTML =
+      `<div class="empty">
+        No wallet requests.
+      </div>`;
+
+    return;
+  }
+
+  box.innerHTML =
+    requests.map(requestHTML).join("");
+
+}
+
+
+function renderHomeRequests(){
+
+  const box =
+    $("homeRequests");
+
+  const pending =
+    requests
+      .filter(x=>x.status==="pending")
+      .slice(0,4);
+
+  if(!pending.length){
+
+    box.innerHTML =
+      `<div class="empty">
+        No pending requests.
+      </div>`;
+
+    return;
+  }
+
+  box.innerHTML =
+    pending.map(requestHTML).join("");
+
+}
+
+
+/* =====================================================
+   REQUEST MODAL
+===================================================== */
+
+window.openRequest = function(id){
+
+  const r =
+    requests.find(x=>x.id===id);
+
+  if(!r) return;
+
+  selectedRequest = r;
+
+  $("selectedRequestId").value=id;
+
+  $("rejectReason").value="";
+
+  $("requestDetails").innerHTML = `
+
+    <div class="card">
+
+      <div class="row">
+
+        <div>
+
+          <b>${escapeHtml(r.username || "User")}</b>
+
+          <div class="muted">
+            ${escapeHtml(r.email || "")}
+          </div>
+
+        </div>
+
+        <div class="requestAmount">
+          ₹${money(r.amount)}
+        </div>
+
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="muted">
+        Type:
+        <b style="color:#fff">
+          ${escapeHtml(r.type)}
+        </b>
+      </div>
+
+      <div class="muted" style="margin-top:7px">
+        ${
+          r.type==="deposit"
+          ? "UTR: "
+          : "UPI: "
+        }
+
+        <b style="color:#fff">
+          ${escapeHtml(
+            r.utr || r.userUpi || ""
+          )}
+        </b>
+      </div>
+
+    </div>
+
+  `;
+
+  openModal("requestModal");
+
+};
+
+
+/* =====================================================
+   PROCESS REQUEST
+===================================================== */
+
+window.processRequest = async function(status){
+
+  if(!selectedRequest)
+    return;
+
+  const r =
+    selectedRequest;
+
+  if(r.status !== "pending"){
+
+    toast("Request already processed.");
+
+    closeModal("requestModal");
+
+    return;
+  }
+
+  const reason =
+    $("rejectReason").value.trim();
+
+  if(status==="rejected" && !reason){
+
+    toast("Enter rejection reason.");
+
+    return;
+  }
+
+  try{
+
+    const requestRef =
+      doc(db,"wallet_requests",r.id);
+
+    const userRef =
+      doc(db,"users",r.userId);
+
+    await runTransaction(
+      db,
+      async tx=>{
+
+        const requestSnap =
+          await tx.get(requestRef);
+
+        const userSnap =
+          await tx.get(userRef);
+
+        if(!requestSnap.exists())
+          throw new Error("Request not found.");
+
+        if(!userSnap.exists())
+          throw new Error("User not found.");
+
+        const requestData =
+          requestSnap.data();
+
+        const userData =
+          userSnap.data();
+
+        if(requestData.status!=="pending")
+          throw new Error("Already processed.");
+
+        let balance =
+          Number(userData.balance || 0);
+
+        const amount =
+          Number(requestData.amount || 0);
+
+
+        /* DEPOSIT */
+
+        if(
+          requestData.type==="deposit" &&
+          status==="approved"
+        ){
+
+          balance += amount;
+
+          tx.update(userRef,{
+            balance
+          });
+
+          const txRef =
+            doc(
+              collection(
+                db,
+                "users",
+                r.userId,
+                "transactions"
+              )
+            );
+
+          tx.set(txRef,{
+            title:"Deposit Approved",
+            amount,
+            type:"credit",
+            date:serverTimestamp(),
+            utr:requestData.utr || ""
+          });
+
+        }
+
+
+        /* WITHDRAW REJECT */
+
+        if(
+          requestData.type==="withdraw" &&
+          status==="rejected"
+        ){
+
+          balance += amount;
+
+          tx.update(userRef,{
+            balance
+          });
+
+          const txRef =
+            doc(
+              collection(
+                db,
+                "users",
+                r.userId,
+                "transactions"
+              )
+            );
+
+          tx.set(txRef,{
+            title:"Withdrawal Refunded",
+            amount,
+            type:"credit",
+            date:serverTimestamp()
+          });
+
+        }
+
+
+        /* REQUEST STATUS */
+
+        tx.update(requestRef,{
+
+          status,
+
+          rejectionReason:
+            status==="rejected"
+            ? reason
+            : "",
+
+          processedAt:
+            serverTimestamp()
+
+        });
+
+      }
+    );
+
+
+    closeModal("requestModal");
+
+    selectedRequest=null;
+
+    toast(
+      status==="approved"
+      ? "Request approved."
+      : "Request rejected."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Unable to process request."
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   USERS
+===================================================== */
+
+window.renderUsers = function(){
+
+  const box =
+    $("userList");
+
+  const search =
+    $("userSearch")
+      .value
+      .trim()
+      .toLowerCase();
+
+  let list =
+    users.filter(u=>{
+
+      if(!search)
+        return true;
+
+      return (
+        String(u.username||"")
+          .toLowerCase()
+          .includes(search)
+        ||
+        String(u.email||"")
+          .toLowerCase()
+          .includes(search)
+      );
+
+    });
+
+  if(!list.length){
+
+    box.innerHTML =
+      `<div class="empty">
+        No users found.
+      </div>`;
+
+    return;
+  }
+
+  box.innerHTML =
+    list.map(u=>{
+
+      const username =
+        u.username || "Player";
+
+      const avatar =
+        "https://ui-avatars.com/api/?name="+
+        encodeURIComponent(username)+
+        "&background=695cff&color=fff";
+
+      return `
+
+        <div class="card">
+
+          <div class="row">
+
+            <img
+              class="userAvatar"
+              src="${avatar}"
+            >
+
+            <div class="userInfo">
+
+              <b>
+                ${escapeHtml(username)}
+              </b>
+
+              <small>
+                ${escapeHtml(u.email || "")}
+              </small>
+
+            </div>
+
+            <div class="balance">
+              ₹${money(u.balance)}
+            </div>
+
+          </div>
+
+          <button
+            class="btn secondary"
+            style="margin-top:12px"
+            onclick="editUserBalance('${u.id}')"
+          >
+            <i class="fa-solid fa-pen"></i>
+            Edit Balance
+          </button>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+};
+
+
+/* =====================================================
+   EDIT BALANCE
+===================================================== */
+
+window.editUserBalance = function(id){
+
+  const u =
+    users.find(x=>x.id===id);
+
+  if(!u) return;
+
+  $("balanceUserId").value=id;
+
+  $("balanceUserInfo").innerHTML =
+    `<b>${escapeHtml(u.username || "Player")}</b>
+     — Current balance ₹${money(u.balance)}`;
+
+  $("newBalance").value =
+    Number(u.balance || 0);
+
+  openModal("balanceModal");
+
+};
+
+
+window.saveUserBalance = async function(){
+
+  const id =
+    $("balanceUserId").value;
+
+  const value =
+    Number($("newBalance").value);
+
+  if(!id){
+
+    toast("User not found.");
+
+    return;
+  }
+
+  if(value < 0){
+
+    toast("Balance cannot be negative.");
+
+    return;
+  }
+
+  try{
+
+    const userRef =
+      doc(db,"users",id);
+
+    const userSnap =
+      await getDoc(userRef);
+
+    if(!userSnap.exists()){
+
+      toast("User not found.");
+
+      return;
+    }
+
+    const oldBalance =
+      Number(userSnap.data().balance || 0);
+
+    const difference =
+      value-oldBalance;
+
+    await updateDoc(
+      userRef,
+      {
+        balance:value,
+        adminBalanceUpdatedAt:
+          serverTimestamp()
+      }
+    );
+
+    if(difference !== 0){
+
+      await addDoc(
+        collection(
+          db,
+          "users",
+          id,
+          "transactions"
+        ),
+        {
+          title:"Admin Balance Adjustment",
+          amount:Math.abs(difference),
+          type:difference>0
+            ? "credit"
+            : "debit",
+          date:serverTimestamp()
+        }
+      );
+
+    }
+
+    closeModal("balanceModal");
+
+    toast("User balance updated.");
+
+  }catch(error){
+
+    console.error(error);
+
+    toast("Unable to update balance.");
+
+  }
+
+};
+
+
+/* =====================================================
+   🔴 NEW: GIFT CODE CREATE
+===================================================== */
+
+window.openGiftModal = function(){
+
+  $("giftCode").value="";
+  $("giftAmount").value="";
+  $("giftMaxUses").value="";
+  $("giftExpiry").value="";
+
+  openModal("giftModal");
+
+};
+
+
+window.createGiftCode = async function(){
+
+  let code =
+    $("giftCode")
+      .value
+      .trim()
+      .toUpperCase()
+      .replace(/\s+/g,"");
+
+  const amount =
+    Number($("giftAmount").value || 0);
+
+  const maxUses =
+    Number($("giftMaxUses").value || 0);
+
+  const expiry =
+    $("giftExpiry").value;
+
+
+  if(!code){
+
+    toast("Enter gift code.");
+
+    return;
+  }
+
+  if(!/^[A-Z0-9_-]{3,30}$/.test(code)){
+
+    toast(
+      "Code can contain A-Z, 0-9, _ and - only."
+    );
+
+    return;
+  }
+
+  if(amount <= 0){
+
+    toast("Enter valid reward amount.");
+
+    return;
+  }
+
+  if(maxUses <= 0){
+
+    toast("Enter valid maximum uses.");
+
+    return;
+  }
+
+
+  try{
+
+    const giftRef =
+      doc(db,"gift_codes",code);
+
+    const existing =
+      await getDoc(giftRef);
+
+    if(existing.exists()){
+
+      toast("This gift code already exists.");
+
+      return;
+    }
+
+
+    let expiresAt = null;
+
+    if(expiry){
+
+      expiresAt =
+        Timestamp.fromDate(
+          new Date(
+            expiry+"T23:59:59"
+          )
+        );
+
+    }
+
+
+    await setDoc(
+      giftRef,
+      {
+        code,
+        amount,
+        maxUses,
+        used:0,
+        active:true,
+        expiry:expiry || "",
+        expiresAt,
+        createdAt:serverTimestamp()
+      }
+    );
+
+
+    closeModal("giftModal");
+
+    toast(
+      "Gift code "+code+" created successfully."
+    );
+
+  }catch(error){
+
+    console.error("GIFT CODE ERROR:", error);
+
+    toast(
+      error && error.code
+        ? error.code + ": " + (error.message || "Unknown Firebase error")
+        : (error?.message || "Unable to create gift code.")
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   🔴 NEW: GIFT CODE LIST
+===================================================== */
+
+function renderGiftCodes(){
+
+  const box =
+    $("giftCodeList");
+
+  if(!giftCodes.length){
+
+    box.innerHTML =
+      `<div class="empty">
+        No gift codes created.
+      </div>`;
+
+    return;
+  }
+
+
+  box.innerHTML =
+    giftCodes.map(g=>{
+
+      const used =
+        Number(g.used || 0);
+
+      const max =
+        Number(g.maxUses || 0);
+
+      let expiry =
+        "No expiry";
+
+      if(g.expiresAt){
+
+        try{
+
+          expiry =
+            g.expiresAt
+              .toDate()
+              .toLocaleDateString(
+                "en-IN"
+              );
+
+        }catch{}
+
+      }
+
+      return `
+
+      <div class="card">
+
+        <div class="row">
+
+          <div>
+
+            <div class="giftCode">
+              🎁 ${escapeHtml(g.code)}
+            </div>
+
+            <div
+              class="muted"
+              style="margin-top:5px"
+            >
+              Reward ₹${money(g.amount)}
+            </div>
+
+          </div>
+
+          <span
+            class="status ${
+              g.active
+              ? "approved"
+              : "rejected"
+            }"
+          >
+            ${g.active ? "ACTIVE":"OFF"}
+          </span>
+
+        </div>
+
+
+        <div class="giftDetails">
+
+          <div class="giftDetail">
+            <small>Reward</small>
+            <b>₹${money(g.amount)}</b>
+          </div>
+
+          <div class="giftDetail">
+            <small>Used</small>
+            <b>${used}/${max}</b>
+          </div>
+
+          <div class="giftDetail">
+            <small>Expiry</small>
+            <b>${escapeHtml(expiry)}</b>
+          </div>
+
+        </div>
+
+
+        <div class="cardActions">
+
+          <button
+            class="smallBtn ${
+              g.active
+              ? "orange"
+              : "green"
+            }"
+            onclick="toggleGiftCode('${g.id}')"
+          >
+            <i class="fa-solid fa-power-off"></i>
+            ${g.active ? "Disable":"Enable"}
+          </button>
+
+          <button
+            class="smallBtn red"
+            onclick="deleteGiftCode('${g.id}')"
+          >
+            <i class="fa-solid fa-trash"></i>
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   🔴 NEW: ENABLE / DISABLE GIFT CODE
+===================================================== */
+
+window.toggleGiftCode = async function(id){
+
+  const g =
+    giftCodes.find(x=>x.id===id);
+
+  if(!g) return;
+
+  try{
+
+    await updateDoc(
+      doc(db,"gift_codes",id),
+      {
+        active:!g.active,
+        updatedAt:serverTimestamp()
+      }
+    );
+
+    toast(
+      g.active
+      ? "Gift code disabled."
+      : "Gift code enabled."
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast("Unable to update gift code.");
+
+  }
+
+};
+
+
+/* =====================================================
+   🔴 NEW: DELETE GIFT CODE
+===================================================== */
+
+window.deleteGiftCode = function(id){
+
+  const g =
+    giftCodes.find(x=>x.id===id);
+
+  if(!g) return;
+
+  confirmAction(
+    `Delete gift code "${g.code}"?`,
+    async()=>{
+
+      await deleteDoc(
+        doc(db,"gift_codes",id)
+      );
+
+      toast("Gift code deleted.");
+
+    }
+  );
+
+};
+
+
+/* =====================================================
+   PAYMENT SETTINGS
+===================================================== */
+
+async function loadPaymentSettings(){
+
+  try{
+
+    const snap =
+      await getDoc(
+        doc(db,"settings","payment")
+      );
+
+    if(snap.exists()){
+
+      const data =
+        snap.data();
+
+      $("settingUPI").value =
+        data.adminUpi || "";
+
+      $("settingQR").value =
+        data.qrCodeUrl || "";
+
+      $("adminQRPreview").src =
+        data.qrCodeUrl || "";
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+
+window.savePaymentSettings =
+async function(){
+
+  const upi =
+    $("settingUPI").value.trim();
+
+  const qr =
+    $("settingQR").value.trim();
+
+  try{
+
+    await setDoc(
+      doc(db,"settings","payment"),
+      {
+        adminUpi:upi,
+        qrCodeUrl:qr,
+        updatedAt:serverTimestamp()
+      },
+      {merge:true}
+    );
+
+    $("adminQRPreview").src=qr;
+
+    toast("Payment settings saved.");
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      "Unable to save payment settings."
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   SUPPORT TICKETS
+===================================================== */
+
+function renderTickets(){
+
+  const box =
+    $("ticketList");
+
+  if(!tickets.length){
+
+    box.innerHTML =
+      `<div class="empty">
+        No support tickets.
+      </div>`;
+
+    return;
+  }
+
+
+  box.innerHTML =
+    tickets.map(t=>{
+
+      return `
+
+      <div class="ticket">
+
+        <div class="row">
+
+          <b style="font-size:12px">
+            ${escapeHtml(t.email || "User")}
+          </b>
+
+          <span
+            class="status ${
+              t.status==="open"
+              ? "pending"
+              : "approved"
+            }"
+          >
+            ${escapeHtml(
+              (t.status || "open").toUpperCase()
+            )}
+          </span>
+
+        </div>
+
+        <div
+          class="ticketIssue"
+          style="margin-top:9px"
+        >
+          ${escapeHtml(t.issue || "")}
+        </div>
+
+        <div class="ticketDate">
+          ${formatTimestamp(t.date)}
+        </div>
+
+        ${
+          t.status==="open"
+          ? `
+          <button
+            class="smallBtn green"
+            style="margin-top:9px"
+            onclick="closeTicket('${t.id}')"
+          >
+            Mark Resolved
+          </button>
+          `
+          : ""
+        }
+
+      </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+window.closeTicket = async function(id){
+
+  try{
+
+    await updateDoc(
+      doc(db,"support_tickets",id),
+      {
+        status:"resolved",
+        resolvedAt:serverTimestamp()
+      }
+    );
+
+    toast("Ticket resolved.");
+
+  }catch(error){
+
+    console.error(error);
+
+    toast("Unable to update ticket.");
+
+  }
+
+};
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+window.adminLogout = async function(){
+
+  try{
+
+    await signOut(auth);
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+};
+
+
+/* =====================================================
+   KEYBOARD ENTER LOGIN
+===================================================== */
+
+$("adminPassword")
+  .addEventListener(
+    "keydown",
+    e=>{
+
+      if(e.key==="Enter")
+        adminLogin();
+
+    }
+  );
+
+
+/* =====================================================
+   MODAL OUTSIDE CLICK
+===================================================== */
+
+document
+  .querySelectorAll(".modal")
+  .forEach(modal=>{
+
+    modal.addEventListener(
+      "click",
+      e=>{
+
+        if(e.target===modal)
+          modal.classList.remove("show");
+
+      }
+    );
+
+  });
+
+</script>
+
+</body>
+</html>
