@@ -3333,16 +3333,13 @@ window.createGiftCode = async function(){
 
   }catch(error){
 
-  console.error("GIFT CODE ERROR:", error);
+  console.error(error);
 
   toast(
-    error && error.code
-      ? error.code + ": " + (error.message || "Unknown Firebase error")
-      : (error?.message || "Unable to create gift code.")
+    "Unable to create gift code."
   );
 
   }
-
 
 /* =====================================================
    🔴 NEW: GIFT CODE LIST
